@@ -5,4 +5,5 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
 
 Install QGIS
+
 Download this map of ukraine: https://download.geofabrik.de/europe/ukraine-latest.osm.pbf from this website https://download.geofabrik.de/europe.html
