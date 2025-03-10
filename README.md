@@ -87,3 +87,50 @@ sys.path.append(script_dir)
 script_path = os.path.join(script_dir, 'telegramToQGIS.py')
 
 exec(open(script_path).read())
+
+----------------------
+### Pseudocode
+---------------------
+
+1. Import necessary libraries and modules
+   - os, time, asyncio, telegram, dotenv, geopy, qgis, PyQt5
+
+2. Load environment variables from .env file
+
+3. Retrieve the Telegram bot token from environment variables
+
+4. Set up Telegram bot with the retrieved token
+   - Define channel usernames to monitor
+
+5. Set up Geopy geolocator
+
+6. Set up QGIS layer for storing locations
+   - Define attributes for the layer (name, timestamp)
+   - Add the layer to the QGIS project
+
+7. Define function to add a circle to the QGIS layer
+   - Create a feature with latitude, longitude, and name
+   - Set geometry and attributes for the feature
+   - Add the feature to the layer
+
+8. Define function to update circle colors based on timestamp
+   - Calculate elapsed time since the feature was added
+   - Delete features older than 30 minutes
+   - Update color intensity based on elapsed time
+   - Set renderer for the layer
+
+9. Define asynchronous function to monitor Telegram channels
+   - Get updates from Telegram bot
+   - Check if the update is from monitored channels
+   - Geocode the text from the update
+   - If location is found and is in Ukraine, add a circle to the layer
+   - Print appropriate messages based on location status
+   - Update circle colors
+
+10. Define function to start monitoring with QTimer
+    - Create a new event loop
+    - Run the monitor_channels function in the event loop
+
+11. Set up QTimer to call start_monitoring every 60 seconds
+
+12. Keep the script running with QApplication
