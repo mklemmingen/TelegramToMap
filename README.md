@@ -4,7 +4,7 @@ Created to quickly look up the location of threats as they come in to judge the 
 
 Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting location data of UAVs, missiles, and planes. Adds a red marker to the map in QGIS, which turns white after some time and eventually disappears.
 
-
+-- QGIS
 
 1. Install QGIS
 
@@ -16,4 +16,24 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
 5. only select as checked UKR_1.shpm and style it after a dopple click to have a opacity of 30 (or what you prefer)
 
-6. open the python console in plugins > python and run the script in the location you have put it
+-- Telegram
+
+6. Create a New Bot with BotFather
+   
+  Open Telegram and search for the user @BotFather.
+
+  Start a chat with BotFather and use the command /newbot.
+
+  Follow the prompts to:
+
+    Name your bot.
+
+    Choose a username for your bot (must end in bot, e.g., MySampleBot).
+
+    Receive your bot token. BotFather will provide you with a token that looks something like this: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11.
+
+7. create a .env file in the root of your project where the qgis project file and the script is, and write a line with:
+
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+
+8. open the python console in plugins > python and run the script in the location you have put it
