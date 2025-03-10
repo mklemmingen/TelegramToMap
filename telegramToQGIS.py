@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 import telegram
 from dotenv import load_dotenv
 from geopy.geocoders import Nominatim
@@ -52,9 +53,9 @@ def update_circle_colors():
             layer.setRenderer(renderer)
 
 # Function to monitor Telegram channels
-def monitor_channels():
+async def monitor_channels():
     while True:
-        updates = bot.get_updates()
+        updates = await bot.get_updates()
         for update in updates:
             if update.channel_post:
                 channel_username = update.channel_post.chat.username
@@ -70,7 +71,7 @@ def monitor_channels():
                     else:
                         print(f"Location not found: {text}")
         update_circle_colors()
-        time.sleep(60)
+        await asyncio.sleep(60)
 
 # Start monitoring
-monitor_channels()
+asyncio.run(monitor_channels())
