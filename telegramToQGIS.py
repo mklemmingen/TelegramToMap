@@ -1,13 +1,21 @@
+import os
 import time
 import telegram
+from dotenv import load_dotenv
 from geopy.geocoders import Nominatim
 from qgis.core import QgsProject, QgsPointXY, QgsGeometry, QgsFeature, QgsVectorLayer, QgsSymbol, QgsRendererCategory, QgsCategorizedSymbolRenderer
 from PyQt5.QtCore import QVariant
 from PyQt5.QtGui import QColor
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Retrieve the Telegram bot token
+bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
+
 # Telegram bot setup
-bot = telegram.Bot(token='YOUR_TELEGRAM_BOT_TOKEN')
-chat_ids = ['CHAT_ID_1', 'CHAT_ID_2']
+bot = telegram.Bot(token=bot_token)
+channel_usernames = ['@war_monitor', '@eRadarrua']
 
 # Geopy setup
 geolocator = Nominatim(user_agent="geoapiExercises")
@@ -43,19 +51,26 @@ def update_circle_colors():
             renderer = QgsCategorizedSymbolRenderer("name", [QgsRendererCategory(name, symbol, name)])
             layer.setRenderer(renderer)
 
-# Function to monitor Telegram chats
-def monitor_chats():
+# Function to monitor Telegram channels
+def monitor_channels():
     while True:
-        for chat_id in chat_ids:
-            updates = bot.get_updates(chat_id=chat_id)
-            for update in updates:
-                if update.message:
-                    text = update.message.text
+        updates = bot.get_updates()
+        for update in updates:
+            if update.channel_post:
+                channel_username = update.channel_post.chat.username
+                if channel_username in channel_usernames:
+                    text = update.channel_post.text
                     location = geolocator.geocode(text)
-                    if location and "Ukraine" in location.address:
-                        add_circle(location.latitude, location.longitude, text)
+                    if location:
+                        if "Ukraine" in location.address:
+                            print(f"Location found: {text} -> {location.address}")
+                            add_circle(location.latitude, location.longitude, text)
+                        else:
+                            print(f"Location found but not in Ukraine: {text} -> {location.address}")
+                    else:
+                        print(f"Location not found: {text}")
         update_circle_colors()
         time.sleep(60)
 
 # Start monitoring
-monitor_chats()
+monitor_channels()
