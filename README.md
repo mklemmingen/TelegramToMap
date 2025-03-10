@@ -30,7 +30,7 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
    Choose a username for your bot (must end in bot, e.g., MySampleBot).
 
-    Receive your bot token. BotFather will provide you with a token that looks something like this: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11.
+   Receive your bot token.
 
 7. create a .env file in the root of your project where the qgis project file and the script is, and write a line with:
 
