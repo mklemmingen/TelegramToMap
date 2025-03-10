@@ -68,7 +68,13 @@ pip install python-telegram-bot geopy python-dotenv
 
 ### -- QGIS
 
-9. open the python console in plugins > python and put each of the following lines in one by one: 
+9. open the python console in plugins > python and put each of the following lines in one by one:
+
+import telegram
+
+import geopy
+
+import dotenv
 
 import os
 
