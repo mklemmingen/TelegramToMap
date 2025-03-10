@@ -36,7 +36,9 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
    TELEGRAM_BOT_TOKEN=your_bot_token_here
 
-8. get the chatIDs by (one way of a couple) opening telegram in the browser, going to the group and copying the - and numbers after the # 
+8. get the chatIDs by (one way of a couple) opening telegram in the browser, going to the group and copying the - and numbers after the #
+
+-- QGIS
 
 9. open the python console in plugins > python and put each of the following lines in one by one: 
 
