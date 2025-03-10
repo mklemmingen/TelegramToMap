@@ -5,7 +5,7 @@ import telegram
 from dotenv import load_dotenv
 from geopy.geocoders import Nominatim
 from qgis.core import QgsProject, QgsPointXY, QgsGeometry, QgsFeature, QgsVectorLayer, QgsSymbol, QgsRendererCategory, QgsCategorizedSymbolRenderer
-from PyQt5.QtCore import QVariant
+from PyQt5.QtCore import QVariant, QTimer
 from PyQt5.QtGui import QColor
 
 # Load environment variables from .env file
@@ -54,24 +54,37 @@ def update_circle_colors():
 
 # Function to monitor Telegram channels
 async def monitor_channels():
-    while True:
-        updates = await bot.get_updates()
-        for update in updates:
-            if update.channel_post:
-                channel_username = update.channel_post.chat.username
-                if channel_username in channel_usernames:
-                    text = update.channel_post.text
-                    location = geolocator.geocode(text)
-                    if location:
-                        if "Ukraine" in location.address:
-                            print(f"Location found: {text} -> {location.address}")
-                            add_circle(location.latitude, location.longitude, text)
-                        else:
-                            print(f"Location found but not in Ukraine: {text} -> {location.address}")
+    updates = await bot.get_updates()
+    for update in updates:
+        if update.channel_post:
+            channel_username = update.channel_post.chat.username
+            if channel_username in channel_usernames:
+                text = update.channel_post.text
+                location = geolocator.geocode(text)
+                if location:
+                    if "Ukraine" in location.address:
+                        print(f"Location found: {text} -> {location.address}")
+                        add_circle(location.latitude, location.longitude, text)
                     else:
-                        print(f"Location not found: {text}")
-        update_circle_colors()
-        await asyncio.sleep(60)
+                        print(f"Location found but not in Ukraine: {text} -> {location.address}")
+                else:
+                    print(f"Location not found: {text}")
+    update_circle_colors()
 
-# Start monitoring
-asyncio.run(monitor_channels())
+# Function to start monitoring with QTimer
+def start_monitoring():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(monitor_channels())
+
+# Set up QTimer to call start_monitoring every 60 seconds
+timer = QTimer()
+timer.timeout.connect(start_monitoring)
+timer.start(60000)  # 60 seconds
+
+# Keep the script running
+from qgis.PyQt.QtWidgets import QApplication
+app = QApplication.instance()
+if app is None:
+    app = QApplication([])
+app.exec_()
