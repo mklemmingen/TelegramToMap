@@ -4,7 +4,7 @@ Created to quickly look up the location of threats as they come in to judge the 
 
 Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting location data of UAVs, missiles, and planes. Adds a red marker to the map in QGIS, which turns white after some time and eventually disappears.
 
--- QGIS
+### -- QGIS
 
 1. Install QGIS
 
@@ -16,7 +16,7 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
 5. only select as checked UKR_1.shpm and style it after a dopple click to have a opacity of 30 (or what you prefer)
 
--- Telegram
+### -- Telegram
 
 6. Create a New Bot with BotFather
    
@@ -38,7 +38,35 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
 8. get the chatIDs by (one way of a couple) opening telegram in the browser, going to the group and copying the - and numbers after the #
 
--- QGIS
+### -- Installing packages into QGIS python 
+
+Step-by-Step Guide to Install Python Packages in QGIS
+
+For Windows:
+
+Open the OSGeo4W Shell:
+
+Go to the Start menu and search for "OSGeo4W Shell".
+
+Open the OSGeo4W Shell.
+
+Install the telegram and other required modules:
+
+Use the following commands to install the necessary packages:
+
+pip install python-telegram-bot geopy python-dotenv
+
+For macOS/Linux:
+
+Open a terminal.
+
+Install the telegram and other required modules:
+
+Use the following commands to install the necessary packages:
+
+pip install python-telegram-bot geopy python-dotenv
+
+### -- QGIS
 
 9. open the python console in plugins > python and put each of the following lines in one by one: 
 
