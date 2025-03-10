@@ -26,9 +26,9 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
   Follow the prompts to:
 
-    Name your bot.
+   Name your bot.
 
-    Choose a username for your bot (must end in bot, e.g., MySampleBot).
+   Choose a username for your bot (must end in bot, e.g., MySampleBot).
 
     Receive your bot token. BotFather will provide you with a token that looks something like this: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11.
 
@@ -38,4 +38,16 @@ Scans incoming messages in Telegram groups for Ukrainian air alarms, extracting 
 
 8. get the chatIDs by (one way of a couple) opening telegram in the browser, going to the group and copying the - and numbers after the # 
 
-9. open the python console in plugins > python and run the script in the location you have put it
+9. open the python console in plugins > python and put each of the following lines in one by one: 
+
+import os
+
+import sys
+
+script_dir = os.path.dirname(QgsProject.instance().fileName())
+
+sys.path.append(script_dir)
+
+script_path = os.path.join(script_dir, 'telegramToQGIS.py')
+
+exec(open(script_path).read())
